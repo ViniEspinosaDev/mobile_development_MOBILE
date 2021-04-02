@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:todomobile/themes/app.theme.dart';
-import 'package:todomobile/views/home.view.dart';
+import 'package:todomobile/views/login.view.dart';
 
 // Esta classe permite acesso ao LocalHost com certificados HTTPS inválidos
 class MyHttpOverrides extends HttpOverrides {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TaskApp',
       theme: appTheme(),
-      home: HomeView(),
+      home: LoginView(),
     );
   }
 }

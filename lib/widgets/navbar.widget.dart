@@ -16,7 +16,7 @@ class Navbar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             onPressed: () {},
@@ -27,7 +27,7 @@ class Navbar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w100,
-                color: Colors.black,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             onPressed: () {},
@@ -38,7 +38,7 @@ class Navbar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w100,
-                color: Colors.black,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             onPressed: () {},
