@@ -2,7 +2,7 @@
 Criador: Vinícius Espinosa de Oliveira
 RA: 180853
 
-## ----------------------------------------
+# Figma (Telas)
 Figma: https://www.figma.com/file/BrVK6b1Rny2zFyfawqcKQD/ToDo-App?node-id=0%3A1
 
 # TaskApp - Mobile
