@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todomobile/components/avatar.widget.dart';
+import 'package:todomobile/controllers/login.controller.dart';
+import 'package:todomobile/user.dart';
 import 'package:todomobile/views/login.view.dart';
 
 class UserCard extends StatelessWidget {
+  final controller = new LoginController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,15 +24,14 @@ class UserCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           TDAvatar(
-            width: 120,
-            path:
-                "https://scontent.fsod2-1.fna.fbcdn.net/v/t1.6435-9/168394212_299370788431321_3900932130757447149_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=YQ7xqBlXyEMAX_amJr_&_nc_ht=scontent.fsod2-1.fna&oh=3b2df52e07cfafc2b36cc5d25922d383&oe=608E77D1",
+            width: 100,
+            path: user.picture,
           ),
           SizedBox(
             height: 20,
           ),
           Text(
-            "Vinícius Espinosa",
+            user.name,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -43,11 +45,15 @@ class UserCard extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginView(),
-                ),
+              controller.logout().then(
+                (data) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginView(),
+                    ),
+                  );
+                },
               );
             },
           ),
