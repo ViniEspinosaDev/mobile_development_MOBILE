@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:todomobile/controllers/todo.controller.dart';
+import 'package:todomobile/stores/app.store.dart';
 
 class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<AppStore>(context);
+    final controller = new TodoController(store);
+
     return Container(
       width: double.infinity,
       height: 80,
@@ -10,38 +17,56 @@ class Navbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          TextButton(
-            child: Text(
-              "Hoje",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+          Observer(
+            builder: (_) => TextButton(
+              child: Text(
+                "Hoje",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: store.currentState == "today"
+                      ? FontWeight.bold
+                      : FontWeight.w100,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
+              onPressed: () {
+                controller.changeSelection("today");
+              },
             ),
-            onPressed: () {},
           ),
-          TextButton(
-            child: Text(
-              "Amanhã",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w100,
-                color: Theme.of(context).primaryColor,
+          Observer(
+            builder: (_) => TextButton(
+              child: Text(
+                "Amanhã",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: store.currentState == "tomorrow"
+                      ? FontWeight.bold
+                      : FontWeight.w100,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
+              onPressed: () {
+                controller.changeSelection("tomorrow");
+              },
             ),
-            onPressed: () {},
           ),
-          TextButton(
-            child: Text(
-              "Todas",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w100,
-                color: Theme.of(context).primaryColor,
+          Observer(
+            builder: (_) => TextButton(
+              child: Text(
+                "Todas",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: store.currentState == "all"
+                      ? FontWeight.bold
+                      : FontWeight.w100,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
+              onPressed: () {
+                controller.changeSelection("all");
+              },
             ),
-            onPressed: () {},
           ),
         ],
       ),

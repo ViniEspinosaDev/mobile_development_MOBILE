@@ -1,54 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:todomobile/controllers/todo.controller.dart';
+import 'package:todomobile/stores/app.store.dart';
+import 'package:todomobile/widgets/busy.widget.dart';
 
 class TodoList extends StatelessWidget {
+  final _dateFormat = new DateFormat('dd/MM/yyyy');
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.only(
-        left: 40,
+    final store = Provider.of<AppStore>(context);
+    final controller = new TodoController(store);
+
+    return Observer(
+      builder: (_) => TDBusy(
+        busy: store.busy,
+        child: store.todos.length == 0
+            ? Center(
+                child: Text("Nenhuma tarefa encontrada."),
+              )
+            : ListView.builder(
+                padding: EdgeInsets.only(
+                  left: 40,
+                ),
+                itemCount: store.todos.length,
+                itemBuilder: (context, index) {
+                  var todo = store.todos[index];
+                  return ListTile(
+                    title: Text(
+                      todo.title,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: todo.done
+                              ? Colors.black.withOpacity(0.2)
+                              : Colors.black),
+                    ),
+                    subtitle: Text(
+                      _dateFormat.format(todo.date),
+                    ),
+                  );
+                },
+              ),
       ),
-      children: <Widget>[
-        ListTile(
-          title: Text(
-            "Ir ao supermercado",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text("04/04/2021"),
-        ),
-        ListTile(
-          title: Text(
-            "Consulta médica",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text("04/04/2021"),
-        ),
-        ListTile(
-          title: Text(
-            "Buscar encomenda na portaria",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text("04/04/2021"),
-        ),
-        ListTile(
-          title: Text(
-            "Enviar trabalho de física",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text("04/04/2021"),
-        ),
-      ],
     );
   }
 }
