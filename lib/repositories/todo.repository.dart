@@ -38,7 +38,7 @@ class TodoRepository {
   }
 
   Future<List<TodoItem>> getAllTodos() async {
-    var url = beginURLAddress + "/v1/todos/undone/todos";
+    var url = beginURLAddress + "/v1/todos";
 
     Response response = await Dio().get(
       url,
