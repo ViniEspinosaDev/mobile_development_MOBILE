@@ -53,7 +53,7 @@ class TodoRepository {
   }
 
   Future<TodoItem> add(TodoItem item) async {
-    var url = beginURLAddress + "/v1/todos/undone/todos";
+    var url = beginURLAddress + "/v1/todos";
 
     try {
       Response response = await Dio().post(

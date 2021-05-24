@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todomobile/components/button.widget.dart';
+import 'package:todomobile/controllers/todo.controller.dart';
+import 'package:todomobile/models/todo-item.model.dart';
+import 'package:todomobile/stores/app.store.dart';
 import 'package:todomobile/views/home.view.dart';
 import 'package:todomobile/widgets/user-card.widget.dart';
 
@@ -33,6 +37,9 @@ class _CreateTodoViewState extends State<CreateTodoView> {
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<AppStore>(context);
+    final controller = new TodoController(store);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -41,6 +48,7 @@ class _CreateTodoViewState extends State<CreateTodoView> {
             Padding(
               padding: const EdgeInsets.all(40.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
@@ -57,6 +65,15 @@ class _CreateTodoViewState extends State<CreateTodoView> {
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Título Inválido';
+                        }
+                        return null;
+                      },
+                      onSaved: (val) {
+                        task = val;
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -96,7 +113,25 @@ class _CreateTodoViewState extends State<CreateTodoView> {
               child: TDButton(
                 text: "Salvar",
                 width: double.infinity,
-                callback: () {},
+                callback: () {
+                  if (!_formKey.currentState.validate()) {
+                    return;
+                  }
+                  _formKey.currentState.save();
+                  var todo = new TodoItem(
+                    title: task,
+                    date: date,
+                  );
+
+                  controller.add(todo).then((_) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeView(),
+                      ),
+                    );
+                  });
+                },
               ),
             ),
             TextButton(
