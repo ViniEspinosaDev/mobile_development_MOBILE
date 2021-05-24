@@ -40,6 +40,45 @@ class TodoList extends StatelessWidget {
                     subtitle: Text(
                       _dateFormat.format(todo.date),
                     ),
+                    onLongPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Concluir a Tarefa"),
+                            content:
+                                Text("Deseja concluir a tarefa ${todo.title}?"),
+                            actions: [
+                              TextButton(
+                                child: new Text("Cancelar"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: new Text(
+                                  "Concluir",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  controller.markAsDone(todo).then((data) {
+                                    Navigator.of(context).pop();
+                                  }).catchError((err) {
+                                    var snackBar = new SnackBar(
+                                      content: Text("Ops, algo deu errado."),
+                                    );
+                                    ScaffoldMessengerState()
+                                        .showSnackBar(snackBar);
+                                  });
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),
