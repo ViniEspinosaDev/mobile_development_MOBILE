@@ -5,7 +5,7 @@ import 'package:todomobile/models/todo-item.model.dart';
 import 'package:todomobile/user.dart';
 
 class TodoRepository {
-  String beginURLAddress = "https://10.0.2.2:5001";
+  String beginURLAddress = "https://taskappapi.azurewebsites.net";
 
   Future<List<TodoItem>> getTodayTodos() async {
     var url = beginURLAddress + "/v1/todos/undone/today";
